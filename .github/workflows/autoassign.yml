@@ -13,4 +13,4 @@ jobs:
       - name: Assign to me
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh issue edit ${{ github.event.issue.number }} --add-assignee Zakonik
+        run: gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-assignee @me

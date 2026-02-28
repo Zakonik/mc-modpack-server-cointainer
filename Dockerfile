@@ -1,11 +1,33 @@
-FROM alpine
+ARG BASE_IMAGE=eclipse-temurin:21-jre-jammy
+FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="Maksymilian Słowiński mslowinski96@gmail.com"
 
 
+ARG PORT=25565
 
-ENV PORT=25565
-ENV SERVER_PATH=/opt/mc-server
+ARG SERVER_PATH=/mc-server
+ARG SCRIPTS_FOLDER=Scripts/
+
+ARG USER=minecraft
+ARG GROUP=minecraft
+
+ENV SERVER_PACK_URL=""
+ENV EULA=""
+ENV START_SCRIPT=start.sh
+
+RUN apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/*
 
 
 
-RUN apk upgrade && apk add openjdk21-jre-headless curl unzip
+RUN groupadd -r ${GROUP} && \
+    useradd -r -m -g ${GROUP} -d ${SERVER_PATH} -s /bin/false ${USER}
+
+WORKDIR ${SERVER_PATH}
+
+COPY --chown=${USER}:${GROUP} --chmod=u+x ${SCRIPTS_FOLDER}* ${SERVER_PATH}/
+
+
+USER ${USER}
+EXPOSE ${PORT}
+
+ENTRYPOINT [ "./ContainerStart.sh" ]
