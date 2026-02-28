@@ -3,12 +3,12 @@
 set -euo pipefail
 
 INSTALL_MARKER=.modpack_installed
-START_SCRIPT=start.sh
+
 ./CheckEula.sh
 
 if [ -n "$SERVER_PACK_URL" ] && [ ! -f "$INSTALL_MARKER" ]; then
 
-    curl --fail "$SERVER_PACK_URL" -o server.zip &&
+    curl --fail -L "$SERVER_PACK_URL" -o server.zip &&
         unzip -q server.zip &&
         rm server.zip
 

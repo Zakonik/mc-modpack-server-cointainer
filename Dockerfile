@@ -3,15 +3,17 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="Maksymilian Słowiński mslowinski96@gmail.com"
 
 
-ARG PORT=25565 
+ARG PORT=25565
 
-ARG SERVER_PATH=/mc-server 
+ARG SERVER_PATH=/mc-server
 ARG SCRIPTS_FOLDER=Scripts/
 
-ARG USER=minecraft 
+ARG USER=minecraft
 ARG GROUP=minecraft
 
-ENV SERVER_PACK_URL="" EULA=""
+ENV SERVER_PACK_URL=""
+ENV EULA=""
+ENV START_SCRIPT=start.sh
 
 RUN apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/*
 
