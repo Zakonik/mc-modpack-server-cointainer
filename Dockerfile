@@ -4,9 +4,10 @@ LABEL org.opencontainers.image.authors="Maksymilian Słowiński mslowinski96@gma
 
 
 ARG PORT=25565 SERVER_PATH=/mc-server USER=minecraft GROUP=minecraft
+ARG SCRIPTS_FOLDER=Scripts/
 ENV SERVER_PACK_URL="" EULA=""
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl unzip bash && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl unzip bash && rm -rf /var/lib/apt/lists/*
 
 
 
@@ -15,17 +16,10 @@ RUN groupadd -r ${GROUP} && \
 
 WORKDIR ${SERVER_PATH}
 
-COPY CheckEula.sh ${SERVER_PATH}
-RUN chown ${USER}:${GROUP} CheckEula.sh && \
-    chmod u+x CheckEula.sh
-
-COPY Start.sh ${SERVER_PATH}
-RUN chown ${USER}:${GROUP} Start.sh && \
-    chmod u+x Start.sh
+COPY --chown=${USER}:${GROUP} --chmod=u+x ${SCRIPTS_FOLDER}* ${SERVER_PATH}/
 
 
 USER ${USER}
 EXPOSE ${PORT}
 
-CMD [ "ls", "-al", "../" ]
-ENTRYPOINT [ "./Start.sh" ]
+ENTRYPOINT [ "./ContainerStart.sh" ]
