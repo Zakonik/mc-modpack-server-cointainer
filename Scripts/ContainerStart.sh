@@ -14,7 +14,7 @@ if [ -n "$SERVER_PACK_URL" ] && [ ! -f "$INSTALL_MARKER" ]; then
     echo "Downloading server files from $SERVER_PACK_URL"
 
     curl --fail -L "$SERVER_PACK_URL" -o server.zip &&
-        echo ""Unzipping and clearing zip server files"" &&
+        echo "Unzipping and clearing zip server files" &&
         unzip -q server.zip &&
         rm server.zip
 

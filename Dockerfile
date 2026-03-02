@@ -1,5 +1,4 @@
-#JDK to make sure that additional java arguments don't break anything
-ARG BASE_IMAGE=eclipse-temurin:21-jdk-jammy
+ARG BASE_IMAGE=eclipse-temurin:21-jre-jammy
 FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="Maksymilian Słowiński mslowinski96@gmail.com"
 
