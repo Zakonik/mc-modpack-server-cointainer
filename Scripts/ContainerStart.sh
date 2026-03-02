@@ -7,22 +7,21 @@ INSTALL_MARKER=$SERVER_PATH/.modpack_installed
 STARTER_PATH=$SERVER_PATH/$START_SCRIPT
 
 echo "Checking EULA"
-$SCRIPTS_PATH/CheckEula.sh
+"$SCRIPTS_PATH/CheckEula.sh"
 
 if [ -n "$SERVER_PACK_URL" ] && [ ! -f "$INSTALL_MARKER" ]; then
 
     echo "Downloading server files from $SERVER_PACK_URL"
 
-    curl --fail -L "$SERVER_PACK_URL" -o server.zip
-    
-    echo "Unziping and clearing zip server files"
-    unzip -q server.zip &&
+    curl --fail -L "$SERVER_PACK_URL" -o server.zip &&
+        echo ""Unzipping and clearing zip server files"" &&
+        unzip -q server.zip &&
         rm server.zip
 
     echo "$SERVER_PACK_URL" >"$INSTALL_MARKER"
 
     echo "Server unpacked. Changing variables.txt if exist"
-    $SCRIPTS_PATH/ChangeVariables.sh
+    "$SCRIPTS_PATH/ChangeVariables.sh"
 
 elif [ -z "$SERVER_PACK_URL" ] && [ ! -f "$INSTALL_MARKER" ]; then
 
