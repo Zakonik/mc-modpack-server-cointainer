@@ -1,0 +1,13 @@
+services:
+    server:
+        image: mc-server-modded
+        build:
+            context: .
+        env_file:
+            - .env
+        ports:
+            - "25565:25565"
+            - "127.0.0.1:25575:25575"
+        volumes:
+            - "${HOST_SERVER_PATH}:/mc-server"
+        restart: unless-stopped
