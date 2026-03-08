@@ -4,7 +4,6 @@ set -euo pipefail
 
 PROPERTIES_PATH=$SERVER_PATH/server.properties
 
-
 : "${MC_MOTD:=Minecraft Server}"
 : "${MC_MAX_PLAYERS:=20}"
 : "${MC_DIFFICULTY:=easy}"
@@ -22,13 +21,10 @@ PROPERTIES_PATH=$SERVER_PATH/server.properties
 : "${MC_RCON_PASSWORD:=}"
 
 
-if [[ "${MC_ENABLE_RCON}" == "true" && -z "${MC_RCON_PASSWORD}" ]]; then
+if echo "${MC_ENABLE_RCON}" | grep -qi true && [ -z "${MC_RCON_PASSWORD}" ]; then
     echo "ERROR: MC_RCON_PASSWORD is required when MC_ENABLE_RCON=true" >&2
     exit 1
 fi
-
-
-
 
 cat > "${PROPERTIES_PATH}" <<EOF
 motd=${MC_MOTD}
@@ -39,7 +35,7 @@ hardcore=${MC_HARDCORE}
 pvp=${MC_PVP}
 level-seed=${MC_LEVEL_SEED}
 level-name=${MC_LEVEL_NAME}
-generator-settings=${MC_GENERATOR_SETTINGS}
+level-type=${MC_LEVEL_TYPE}
 view-distance=${MC_VIEW_DISTANCE}
 spawn-protection=${MC_SPAWN_PROTECTION}
 online-mode=${MC_ONLINE_MODE}
